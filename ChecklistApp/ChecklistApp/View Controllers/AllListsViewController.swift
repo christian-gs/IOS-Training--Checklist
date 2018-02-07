@@ -51,6 +51,8 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target:self, action:#selector(openAddListDetailViewController))
         
+        tableView.tableFooterView = UIView()
+        
         loadCheckLists()
         registerDefaults()
         handleFirstTime()
@@ -60,6 +62,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
     override func viewDidAppear(_ animated: Bool) {
         indexOfSelectedChecklist = -1
+        tableView.reloadData()
     }
     
     // set default values for user defualts
@@ -122,6 +125,16 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     {
         let cell = makeCell(for: tableView)
         cell.textLabel!.text = lists[indexPath.row].name
+        
+        if lists[indexPath.row].items.count == 0{
+            cell.detailTextLabel!.text = "none"
+        }
+        else{
+            let checkList = lists[indexPath.row]
+            cell.detailTextLabel!.text = checkList.countUncheckedItems() == 0 ? "All Done!" : "\(checkList.countUncheckedItems()) Remaining"
+        }
+        
+        cell.imageView!.image = UIImage(named: lists[indexPath.row].iconName)
         return cell
     }
  
@@ -135,7 +148,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             return cell
         } else {
             // return new cell if theres none to re-use
-            return UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            return UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
         }
         
     }
@@ -202,6 +215,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             let decoder = PropertyListDecoder()
             do {
                 lists = try decoder.decode([CheckList].self, from: data)
+                sortCheckLists()
             }
             catch {
                 print("Error decoding item array!")
@@ -218,15 +232,21 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding checklist: CheckList) {
         
         lists.append(checklist)
+        sortCheckLists()
         tableView.reloadData()
-        
         navigationController?.popViewController(animated: true)
     }
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing checklist: CheckList) {
         
+        sortCheckLists()
         tableView.reloadData()
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func sortCheckLists() {
+        lists.sort(by: { checklist1, checklist2 in
+            return checklist1.name.localizedStandardCompare(checklist2.name) == .orderedAscending })
     }
     
     //MARK:- UINavigationController delegate methods

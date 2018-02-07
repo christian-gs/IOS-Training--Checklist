@@ -112,10 +112,10 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
     private func updateCheckMark(index: Int, cell: CustomTableViewCell)
     {
         if self.checkList.items[index].checked{
-            cell.checkLabel.text = "✔️"
+            cell.checkImageView.image = #imageLiteral(resourceName: "checkMark")
         }
         else{
-            cell.checkLabel.text = ""
+            cell.checkImageView.image = #imageLiteral(resourceName: "No Icon")
         }
     }
     

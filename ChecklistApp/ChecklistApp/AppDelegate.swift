@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let checklistNavController = UINavigationController(rootViewController: AllListsViewController() )
+        checklistNavController.navigationBar.tintColor = #colorLiteral(red: 0.03516860306, green: 0.6951913238, blue: 0.6615530849, alpha: 1)
         window?.rootViewController = checklistNavController
         return true
     }
