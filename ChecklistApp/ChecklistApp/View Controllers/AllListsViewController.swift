@@ -6,12 +6,21 @@
 //  Copyright © 2018 Gridstone. All rights reserved.
 //
 
+struct ListType {
+    let empty = 0
+    let inProgress = 1
+    let done = 2
+}
+
 import UIKit
 
 class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate
 {
     //MARK:- variables
-    private var lists = [CheckList]()
+    private var filteredLists = [[CheckList](), [CheckList](), [CheckList]()]// array of checklist arrays
+    private var allLists = [CheckList]()
+    private let listType = ListType()
+    // allLists[indexPath.section][indexPath.row]
     
     //MARK:- properties
     private var indexOfSelectedChecklist: Int
@@ -38,9 +47,11 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        listOfLists.append()
+//        listOfLists.append(inProgressLists)
+//        listOfLists.append(doneLists)
+//        listOfLists.append(lists)
         
-        print(" \n\n\n Documents folder is \(documentsDirectory()) \n\n\n\n")
-        print("\n\n Data file path is \(dataFilePath()) \n\n\n\n")
         
         //register for app will terminate notifications
         NotificationCenter.default.addObserver(self, selector: #selector(timeToSave), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
@@ -60,9 +71,15 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        filteredLists[listType.empty] = allLists.filter { $0.items.count == 0 } // set empty lists
+        filteredLists[listType.inProgress] = allLists.filter({!filteredLists[listType.empty].contains($0) && $0.countUncheckedItems() > 0})
+        filteredLists[listType.done] = allLists.filter( {!filteredLists[listType.empty].contains($0) && $0.countUncheckedItems() == 0})
+        tableView.reloadData()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         indexOfSelectedChecklist = -1
-        tableView.reloadData()
     }
     
     // set default values for user defualts
@@ -78,7 +95,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         if firstLaunch == true
         {
             let checklist = CheckList(name: "New List")
-            lists.append(checklist)
+            allLists.append(checklist)
             indexOfSelectedChecklist = 0
             firstLaunch = false
         }
@@ -88,8 +105,8 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     // check list index stored in user defaults to open last viewed list on launch
     private func loadLastViewedList()
     {
-        if  indexOfSelectedChecklist >= 0 &&  indexOfSelectedChecklist < lists.count{
-            navigationController?.pushViewController(CheckListViewController(checkList: lists[ indexOfSelectedChecklist]), animated: false)
+        if  indexOfSelectedChecklist >= 0 &&  indexOfSelectedChecklist < allLists.count{
+            navigationController?.pushViewController(CheckListViewController(checkList: allLists[indexOfSelectedChecklist]), animated: false)
         }
     }
     
@@ -100,58 +117,73 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
     @objc private func openAddListDetailViewController(sender: UIBarButtonItem)
     {
-        var listDetailViewController = ListDetailViewController(checkListToEdit: nil )
+        let listDetailViewController = ListDetailViewController(checkListToEdit: nil )
         listDetailViewController.delegate = self
         navigationController?.pushViewController(listDetailViewController, animated: true)
     }
     
     //MARK:- table view delegate methods
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var title = ""
+        switch section
+        {
+            case 0:
+                title = "Empty"
+            case 1:
+                title = "In Progress"
+            case 2:
+                title = "Done"
+            default:
+                title = "All Lists"
+        }
+        
+        return title
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         //save checklist index into user defaults (used to launch app on last viewed checklist)
         indexOfSelectedChecklist =  indexPath.row
         
-        navigationController?.pushViewController(CheckListViewController(checkList: lists[indexPath.row]), animated: true)
+        navigationController?.pushViewController(CheckListViewController(checkList: filteredLists[indexPath.section][indexPath.row]), animated: true)
     }
 
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        return lists.count
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return filteredLists[section].count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = makeCell(for: tableView)
-        cell.textLabel!.text = lists[indexPath.row].name
-        
-        if lists[indexPath.row].items.count == 0{
-            cell.detailTextLabel!.text = "none"
-        }
-        else{
-            let checkList = lists[indexPath.row]
-            cell.detailTextLabel!.text = checkList.countUncheckedItems() == 0 ? "All Done!" : "\(checkList.countUncheckedItems()) Remaining"
+        var cell = tableView.dequeueReusableCell( withIdentifier: "Cell")
+        if cell == nil {
+            cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
         }
         
-        cell.imageView!.image = UIImage(named: lists[indexPath.row].iconName)
-        return cell
+        let checkList = filteredLists[indexPath.section][indexPath.row]
+        switch indexPath.section {
+            case 0:
+                cell?.detailTextLabel?.text = "none"
+            case 1:
+                cell?.detailTextLabel?.text = "\(checkList.countUncheckedItems()) Remaining"
+            case 2:
+                cell?.detailTextLabel!.text = "All Done!"
+            default:
+                cell?.detailTextLabel!.text = "All Lists"
+        }
+        
+        cell?.textLabel!.text = checkList.name
+        
+        cell?.imageView!.image = UIImage(named: checkList.iconName)
+        return cell!
     }
  
-    // make cells from scratch
-    func makeCell(for tableView: UITableView) -> UITableViewCell
-    {
-        let cellIdentifier = "Cell"
-        //try and re-use existing cell
-        if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-        {
-            return cell
-        } else {
-            // return new cell if theres none to re-use
-            return UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
-        }
-        
-    }
     
     //add edit buttons to table rows that appear on swipe
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
@@ -159,8 +191,14 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         //set up delete button functionality
         let delete = UITableViewRowAction(style: .normal, title: "Delete") { action, index in
             print("share button tapped")
+            //remove from filtered lists
+            let listToDelete = self.filteredLists[editActionsForRowAt.section][editActionsForRowAt.row]
+            self.allLists.removeElement(x: listToDelete)
+            //remove from all lists
+            self.filteredLists[editActionsForRowAt.section].remove(at: editActionsForRowAt.row)
             
-            self.lists.remove(at: editActionsForRowAt.row)
+            
+            
             let indexPaths = [editActionsForRowAt]
             tableView.deleteRows(at: indexPaths, with: .automatic)
         }
@@ -169,7 +207,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         //set up edit button functionality
         let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
             
-            let editListViewController = ListDetailViewController(checkListToEdit: self.lists[editActionsForRowAt.row])
+            let editListViewController = ListDetailViewController(checkListToEdit: self.filteredLists[editActionsForRowAt.section][editActionsForRowAt.row])
             editListViewController.delegate = self
             self.navigationController?.pushViewController(editListViewController, animated: true)
         }
@@ -189,7 +227,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     //func to create/access new file which will be used to store data to
     private func dataFilePath() -> URL {
-        return documentsDirectory().appendingPathComponent( "Checklists.plist")
+        return documentsDirectory().appendingPathComponent("Checklists.plist")
     }
     
     private func saveCheckLists()
@@ -197,8 +235,8 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         let encoder = PropertyListEncoder()
         do {
-            let data = try encoder.encode(lists)
-            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic)
+            let data = try encoder.encode(allLists)
+            try? data.write(to: dataFilePath(), options: Data.WritingOptions.atomic)
         }
         catch {
             print("Error encoding item array!")
@@ -214,7 +252,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         {
             let decoder = PropertyListDecoder()
             do {
-                lists = try decoder.decode([CheckList].self, from: data)
+                allLists = try decoder.decode([CheckList].self, from: data)
                 sortCheckLists()
             }
             catch {
@@ -231,7 +269,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding checklist: CheckList) {
         
-        lists.append(checklist)
+        allLists.append(checklist)
         sortCheckLists()
         tableView.reloadData()
         navigationController?.popViewController(animated: true)
@@ -245,7 +283,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     private func sortCheckLists() {
-        lists.sort(by: { checklist1, checklist2 in
+        allLists.sort(by: { checklist1, checklist2 in
             return checklist1.name.localizedStandardCompare(checklist2.name) == .orderedAscending })
     }
     
@@ -258,4 +296,12 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         }
     }
 
+}
+
+extension Array where Element: Equatable {
+    mutating func removeElement(x: Element) {
+        if let i = self.index(of: x) {
+            self.remove(at: i)
+        }
+    }
 }

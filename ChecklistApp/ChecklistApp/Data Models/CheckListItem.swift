@@ -10,8 +10,8 @@ import UIKit
 
 class CheckListItem: NSObject, Codable
 {
-    var text: String = ""
-    var checked: Bool = false
+    var text: String
+    var checked: Bool
     
     init(text: String, checked: Bool) {
         

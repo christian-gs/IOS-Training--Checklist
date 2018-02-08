@@ -74,7 +74,7 @@ class ListDetailViewController: UITableViewController,UITextFieldDelegate, IconP
     //MARK:- variables
     private var checkListToEdit: CheckList?
     
-    var iconName = ""
+    var iconName = "No Icon"
     var checkListName = ""
     
     weak var delegate: ListDetailViewControllerDelegate?
@@ -146,7 +146,7 @@ class ListDetailViewController: UITableViewController,UITextFieldDelegate, IconP
         delegate?.listDetailViewControllerDidCancel(self)
     }
     
-    //Mark:- tableview delegate methods
+    //MARK:- tableview delegate methods
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -156,7 +156,7 @@ class ListDetailViewController: UITableViewController,UITextFieldDelegate, IconP
         return 1
     }
     
-    //set itt so user can only click the second cell/ row
+    //set it so user can only click the second cell/ row
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath.section == 1 {
             return indexPath
@@ -166,7 +166,7 @@ class ListDetailViewController: UITableViewController,UITextFieldDelegate, IconP
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var iconPickerViewController = IconPickerViewController()
+        let iconPickerViewController = IconPickerViewController()
         iconPickerViewController.delegate = self
         navigationController?.pushViewController(iconPickerViewController, animated: true)
     }

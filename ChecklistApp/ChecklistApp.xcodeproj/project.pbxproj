@@ -13,7 +13,6 @@
 		AA1D272E202AA8650035A496 /* IconPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D272D202AA8650035A496 /* IconPickerViewController.swift */; };
 		AA2BDC492027D22C00883DF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2BDC482027D22C00883DF9 /* AppDelegate.swift */; };
 		AA2BDC4B2027D22C00883DF9 /* CheckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2BDC4A2027D22C00883DF9 /* CheckListViewController.swift */; };
-		AA2BDC4E2027D22C00883DF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA2BDC4C2027D22C00883DF9 /* Main.storyboard */; };
 		AA2BDC512027D22C00883DF9 /* ChecklistApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA2BDC4F2027D22C00883DF9 /* ChecklistApp.xcdatamodeld */; };
 		AA2BDC532027D22C00883DF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA2BDC522027D22C00883DF9 /* Assets.xcassets */; };
 		AA2BDC5E2027D5C300883DF9 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2BDC5D2027D5C300883DF9 /* CustomTableViewCell.swift */; };
@@ -29,7 +28,6 @@
 		AA2BDC452027D22C00883DF9 /* ChecklistApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChecklistApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA2BDC482027D22C00883DF9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA2BDC4A2027D22C00883DF9 /* CheckListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListViewController.swift; sourceTree = "<group>"; };
-		AA2BDC4D2027D22C00883DF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AA2BDC502027D22C00883DF9 /* ChecklistApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChecklistApp.xcdatamodel; sourceTree = "<group>"; };
 		AA2BDC522027D22C00883DF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA2BDC572027D22C00883DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -75,7 +73,6 @@
 			isa = PBXGroup;
 			children = (
 				AA2BDC522027D22C00883DF9 /* Assets.xcassets */,
-				AA2BDC4C2027D22C00883DF9 /* Main.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -177,7 +174,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA2BDC532027D22C00883DF9 /* Assets.xcassets in Resources */,
-				AA2BDC4E2027D22C00883DF9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,17 +198,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		AA2BDC4C2027D22C00883DF9 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AA2BDC4D2027D22C00883DF9 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		AA2BDC582027D22C00883DF9 /* Debug */ = {

@@ -8,9 +8,10 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate  {
 
     var window: UIWindow?
 
@@ -18,9 +19,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
         let checklistNavController = UINavigationController(rootViewController: AllListsViewController() )
         checklistNavController.navigationBar.tintColor = #colorLiteral(red: 0.03516860306, green: 0.6951913238, blue: 0.6615530849, alpha: 1)
         window?.rootViewController = checklistNavController
+        window?.makeKeyAndVisible()
+        
+        //notification code
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+        
         return true
     }
 
@@ -46,6 +55,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+    }
+    
+    // MARK:- User Notification Delegates
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        print("Received local notification \(notification)")
     }
 
     // MARK: - Core Data stack

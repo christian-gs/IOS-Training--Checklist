@@ -12,6 +12,10 @@ class IconPickerViewController: UITableViewController{
     let icons = ["No Icon", "devices", "locations", "pokemon", "birthdays", "activities"]
     weak var delegate: IconPickerViewControllerDelegate?
     
+    override func viewDidLoad() {
+        tableView.tableFooterView = UIView()
+    }
+    
     // MARK:- Table View Delegates
     override func tableView(_ tableView: UITableView,
                             numberOfRowsInSection section: Int) -> Int {

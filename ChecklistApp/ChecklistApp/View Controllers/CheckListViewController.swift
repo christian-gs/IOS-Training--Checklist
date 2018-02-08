@@ -48,6 +48,7 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
         navigationController?.pushViewController(addItemViewController, animated: true)
     }
     
+    
     //MARK:- table view delegate methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -98,15 +99,12 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell( withIdentifier: "ChecklistItem", for: indexPath) as? CustomTableViewCell
-
+        let cell = tableView.dequeueReusableCell( withIdentifier: "ChecklistItem", for: indexPath) as! CustomTableViewCell
         
-        cell?.itemLabel.text = checkList.items[indexPath.row].text
-        updateCheckMark(index: indexPath.row, cell: cell!)
+        cell.itemLabel.text = checkList.items[indexPath.row].text
+        updateCheckMark(index: indexPath.row, cell: cell)
         
-        
-        return cell!
-        
+        return cell
     }
     
     private func updateCheckMark(index: Int, cell: CustomTableViewCell)
@@ -131,6 +129,7 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
     func itemDetailViewController(_ controller: ItemDetailsViewController,didFinishAdding item: CheckListItem)
     {
         checkList.items.append(item)
+        sortItems()
         tableView.reloadData()
         
         navigationController?.popViewController(animated:true)
@@ -142,9 +141,15 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
         {
             checkList.items[index] = item
         }
+        sortItems()
         tableView.reloadData()
         
         navigationController?.popViewController(animated:true)
+    }
+    
+    private func sortItems() {
+        checkList.items.sort(by: { item1, item2 in
+            return item1.text.localizedStandardCompare(item2.text) == .orderedAscending })
     }
 
 
