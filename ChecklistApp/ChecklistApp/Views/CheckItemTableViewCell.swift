@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomTableViewCell: UITableViewCell
+class CheckItemTableViewCell: UITableViewCell
 {
     //MARK:- variables
     var itemLabel = UILabel()

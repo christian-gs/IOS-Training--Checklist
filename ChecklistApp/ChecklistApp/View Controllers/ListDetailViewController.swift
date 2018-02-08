@@ -16,26 +16,6 @@ protocol ListDetailViewControllerDelegate: class
     func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing checklist: CheckList)
 }
 
-class textFieldCell : UITableViewCell
-{
-    var checkListNameTextField: UITextField!
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        // initialise cutom cells
-        self.checkListNameTextField = UITextField(frame: self.frame.insetBy(dx: 15, dy: 0))
-        self.checkListNameTextField.frame.insetBy( dx: 15, dy: 0)
-        self.checkListNameTextField.placeholder = "Name of the item"
-        contentView.addSubview(self.checkListNameTextField)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 class IconCell: UITableViewCell
 {
     var iconLabel: UILabel = UILabel()
@@ -115,7 +95,7 @@ class ListDetailViewController: UITableViewController,UITextFieldDelegate, IconP
         // initialise tableview
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(textFieldCell.self, forCellReuseIdentifier: "textFieldCell")
+        tableView.register(TextFieldCell.self, forCellReuseIdentifier: "textFieldCell")
         tableView.register(IconCell.self, forCellReuseIdentifier: "iconCell")
     }
     
@@ -174,7 +154,7 @@ class ListDetailViewController: UITableViewController,UITextFieldDelegate, IconP
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "textFieldCell", for: indexPath) as! textFieldCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "textFieldCell", for: indexPath) as! TextFieldCell
             cell.checkListNameTextField.becomeFirstResponder()
             cell.checkListNameTextField.delegate = self
             cell.checkListNameTextField.text = self.checkListName

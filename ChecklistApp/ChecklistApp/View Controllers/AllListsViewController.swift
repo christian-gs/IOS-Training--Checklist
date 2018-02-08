@@ -84,7 +84,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
     // set default values for user defualts
     private func registerDefaults() {
-        let dictionary: [String:Any] = [ "ChecklistIndex": -1,  "FirstLaunch": true ]
+        let dictionary: [String:Any] = [ "ChecklistIndex": -1,  "FirstLaunch": true, "ChecklistItemID": 0 ]
         UserDefaults.standard.register(defaults: dictionary)
        
     }
@@ -120,6 +120,15 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         let listDetailViewController = ListDetailViewController(checkListToEdit: nil )
         listDetailViewController.delegate = self
         navigationController?.pushViewController(listDetailViewController, animated: true)
+    }
+    
+    //static/ global function
+    class func nextChecklistItemID() -> Int {
+        let userDefaults = UserDefaults.standard
+        let itemID = userDefaults.integer(forKey: "ChecklistItemID")
+        userDefaults.set(itemID + 1, forKey: "ChecklistItemID")
+        userDefaults.synchronize()
+        return itemID
     }
     
     //MARK:- table view delegate methods

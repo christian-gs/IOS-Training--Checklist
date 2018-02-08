@@ -34,7 +34,7 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target:self, action:#selector(openAddItemViewController))
         
         //tableview initialisation
-        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "ChecklistItem")
+        tableView.register(CheckItemTableViewCell.self, forCellReuseIdentifier: "ChecklistItem")
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
@@ -54,7 +54,7 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
         
         checkList.items[indexPath.row].checked = !checkList.items[indexPath.row].checked
         
-        if let cell = tableView.cellForRow(at: indexPath) as? CustomTableViewCell
+        if let cell = tableView.cellForRow(at: indexPath) as? CheckItemTableViewCell
         {
             updateCheckMark(index: indexPath.row ,cell: cell)
         }
@@ -99,7 +99,7 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell( withIdentifier: "ChecklistItem", for: indexPath) as! CustomTableViewCell
+        let cell = tableView.dequeueReusableCell( withIdentifier: "ChecklistItem", for: indexPath) as! CheckItemTableViewCell
         
         cell.itemLabel.text = checkList.items[indexPath.row].text
         updateCheckMark(index: indexPath.row, cell: cell)
@@ -107,7 +107,7 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
         return cell
     }
     
-    private func updateCheckMark(index: Int, cell: CustomTableViewCell)
+    private func updateCheckMark(index: Int, cell: CheckItemTableViewCell)
     {
         if self.checkList.items[index].checked{
             cell.checkImageView.image = #imageLiteral(resourceName: "checkMark")

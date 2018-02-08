@@ -15,9 +15,10 @@
 		AA2BDC4B2027D22C00883DF9 /* CheckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2BDC4A2027D22C00883DF9 /* CheckListViewController.swift */; };
 		AA2BDC512027D22C00883DF9 /* ChecklistApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA2BDC4F2027D22C00883DF9 /* ChecklistApp.xcdatamodeld */; };
 		AA2BDC532027D22C00883DF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA2BDC522027D22C00883DF9 /* Assets.xcassets */; };
-		AA2BDC5E2027D5C300883DF9 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2BDC5D2027D5C300883DF9 /* CustomTableViewCell.swift */; };
+		AA2BDC5E2027D5C300883DF9 /* CheckItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2BDC5D2027D5C300883DF9 /* CheckItemTableViewCell.swift */; };
 		AA2BDC602027E3DF00883DF9 /* CheckListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2BDC5F2027E3DF00883DF9 /* CheckListItem.swift */; };
 		AA2BDC622027F9DA00883DF9 /* ItemDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2BDC612027F9DA00883DF9 /* ItemDetailsViewController.swift */; };
+		AA670EF7202C12D200ECFD3C /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA670EF6202C12D200ECFD3C /* TextFieldTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,9 +32,10 @@
 		AA2BDC502027D22C00883DF9 /* ChecklistApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChecklistApp.xcdatamodel; sourceTree = "<group>"; };
 		AA2BDC522027D22C00883DF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA2BDC572027D22C00883DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA2BDC5D2027D5C300883DF9 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		AA2BDC5D2027D5C300883DF9 /* CheckItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckItemTableViewCell.swift; sourceTree = "<group>"; };
 		AA2BDC5F2027E3DF00883DF9 /* CheckListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListItem.swift; sourceTree = "<group>"; };
 		AA2BDC612027F9DA00883DF9 /* ItemDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsViewController.swift; sourceTree = "<group>"; };
+		AA670EF6202C12D200ECFD3C /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +82,8 @@
 		AA1D272C202A6BFC0035A496 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				AA2BDC5D2027D5C300883DF9 /* CustomTableViewCell.swift */,
+				AA2BDC5D2027D5C300883DF9 /* CheckItemTableViewCell.swift */,
+				AA670EF6202C12D200ECFD3C /* TextFieldTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -189,8 +192,9 @@
 				AA0D7DE520295CF300F37A13 /* AllListsViewController.swift in Sources */,
 				AA2BDC622027F9DA00883DF9 /* ItemDetailsViewController.swift in Sources */,
 				AA2BDC492027D22C00883DF9 /* AppDelegate.swift in Sources */,
+				AA670EF7202C12D200ECFD3C /* TextFieldTableViewCell.swift in Sources */,
 				AA1D272E202AA8650035A496 /* IconPickerViewController.swift in Sources */,
-				AA2BDC5E2027D5C300883DF9 /* CustomTableViewCell.swift in Sources */,
+				AA2BDC5E2027D5C300883DF9 /* CheckItemTableViewCell.swift in Sources */,
 				AA2BDC602027E3DF00883DF9 /* CheckListItem.swift in Sources */,
 				AA2BDC512027D22C00883DF9 /* ChecklistApp.xcdatamodeld in Sources */,
 				AA0D7DE720295D1900F37A13 /* ListDetailViewController.swift in Sources */,
