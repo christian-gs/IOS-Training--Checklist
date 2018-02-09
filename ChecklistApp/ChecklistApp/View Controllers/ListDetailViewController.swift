@@ -16,38 +16,6 @@ protocol ListDetailViewControllerDelegate: class
     func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing checklist: CheckList)
 }
 
-class IconCell: UITableViewCell
-{
-    var iconLabel: UILabel = UILabel()
-    var iconImageView = UIImageView()
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        self.iconLabel.text = "Icon"
-        self.iconImageView.image = UIImage()
-        
-        self.iconLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.iconImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        contentView.addSubview(iconLabel)
-        contentView.addSubview(iconImageView)
-        self.accessoryType = .disclosureIndicator
-        
-        NSLayoutConstraint.activate([
-            iconLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            iconLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            iconImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
-            iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-            ])
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 class ListDetailViewController: UITableViewController,UITextFieldDelegate, IconPickerViewControllerDelegate
 {
     
@@ -95,8 +63,8 @@ class ListDetailViewController: UITableViewController,UITextFieldDelegate, IconP
         // initialise tableview
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(TextFieldCell.self, forCellReuseIdentifier: "textFieldCell")
-        tableView.register(IconCell.self, forCellReuseIdentifier: "iconCell")
+        tableView.register(TextFieldTableViewCell.self, forCellReuseIdentifier: "textFieldCell")
+        tableView.register(IconTableViewCell.self, forCellReuseIdentifier: "iconCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -154,13 +122,13 @@ class ListDetailViewController: UITableViewController,UITextFieldDelegate, IconP
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "textFieldCell", for: indexPath) as! TextFieldCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "textFieldCell", for: indexPath) as! TextFieldTableViewCell
             cell.checkListNameTextField.becomeFirstResponder()
             cell.checkListNameTextField.delegate = self
             cell.checkListNameTextField.text = self.checkListName
             return cell
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "iconCell", for: indexPath) as! IconCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "iconCell", for: indexPath) as! IconTableViewCell
             cell.iconImageView.image = UIImage(named: self.iconName)
             return cell
         }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TextFieldCell : UITableViewCell
+class TextFieldTableViewCell : UITableViewCell
 {
     var checkListNameTextField: UITextField!
     

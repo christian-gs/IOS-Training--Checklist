@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ChecklistApp/View Controllers/ListDetailViewController.swift"
-            timestampString = "539833112.152738"
+            timestampString = "539843858.635581"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
             landmarkName = "tableView(_:willSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -116,13 +116,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ChecklistApp/View Controllers/ItemDetailsViewController.swift"
-            timestampString = "539836504.029603"
+            timestampString = "539843858.636066"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
-            landmarkName = "tableView(_:didSelectRowAt:)"
-            landmarkType = "7">
+            startingLineNumber = "157"
+            endingLineNumber = "157">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -132,13 +130,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ChecklistApp/View Controllers/ItemDetailsViewController.swift"
-            timestampString = "539836504.029659"
+            timestampString = "539843858.636115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
-            landmarkName = "tableView(_:didSelectRowAt:)"
-            landmarkType = "7">
+            startingLineNumber = "154"
+            endingLineNumber = "154">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -148,13 +144,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ChecklistApp/View Controllers/ItemDetailsViewController.swift"
-            timestampString = "539836504.029712"
+            timestampString = "539843858.6361541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
+            startingLineNumber = "170"
+            endingLineNumber = "170">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -180,13 +174,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ChecklistApp/View Controllers/ItemDetailsViewController.swift"
-            timestampString = "539836504.029824"
+            timestampString = "539843858.636206"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
+            startingLineNumber = "173"
+            endingLineNumber = "173">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -196,13 +188,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ChecklistApp/View Controllers/ItemDetailsViewController.swift"
-            timestampString = "539836504.02988"
+            timestampString = "539843858.636242"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
+            startingLineNumber = "174"
+            endingLineNumber = "174">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

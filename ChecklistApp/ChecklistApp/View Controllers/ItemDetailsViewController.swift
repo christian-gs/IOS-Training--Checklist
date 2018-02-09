@@ -17,105 +17,6 @@ protocol ItemDetailsViewControllerDelegate: class
     func itemDetailViewController(_ controller: ItemDetailsViewController, didFinishEditing item: CheckListItem)
 }
 
-class SwitchCell: UITableViewCell
-{
-    var switchLabel: UILabel = UILabel()
-    var reminderSwitch = UISwitch()
-
-    var handler: ((Bool) -> Void)?
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        self.switchLabel.text = "Remind Me"
-        
-        self.switchLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.reminderSwitch.translatesAutoresizingMaskIntoConstraints = false
-        
-        reminderSwitch.addTarget(self, action: #selector(switchStateChanged(sender:)), for: .valueChanged)
-        
-        contentView.addSubview(switchLabel)
-        contentView.addSubview(reminderSwitch)
-        
-        NSLayoutConstraint.activate([
-            switchLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            switchLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            reminderSwitch.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
-            reminderSwitch.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-            ])
-    }
-    
-    @objc func switchStateChanged(sender: UISwitch) {
-        handler?(sender.isOn)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class DoubleLabelCell: UITableViewCell
-{
-    var leftLabel = UILabel()
-    var rightLabel = UILabel()
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        self.leftLabel.text = "Due Date"
-        self.rightLabel.text = "Detail"
-        
-        for label in [leftLabel, rightLabel] {
-            label.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(label)
-        }
-        
-        NSLayoutConstraint.activate([
-            leftLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            leftLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            rightLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
-            rightLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-            ])
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class DatePickerCell: UITableViewCell
-{
-    var datePicker = UIDatePicker()
-    var handler: ((Date) -> Void)?
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-       
-        datePicker.addTarget(self, action: #selector(dateChanged(sender:)), for: .valueChanged)
-        datePicker.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(datePicker)
-        
-        NSLayoutConstraint.activate([
-            datePicker.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            datePicker.topAnchor.constraint(equalTo: contentView.topAnchor),
-            datePicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            datePicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-            ])
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    @objc func dateChanged(sender: UIDatePicker) {
-        handler?(sender.date)
-    }
-}
-
 class ItemDetailsViewController: UITableViewController, UITextFieldDelegate
 {
     //MARK:- variables
@@ -147,10 +48,10 @@ class ItemDetailsViewController: UITableViewController, UITextFieldDelegate
         // tableview initialisation
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(TextFieldCell.self, forCellReuseIdentifier: "textFieldCell")
-        tableView.register(SwitchCell.self, forCellReuseIdentifier: "switchCell")
-        tableView.register(DoubleLabelCell.self, forCellReuseIdentifier: "doubleLabelCell")
-        tableView.register(DatePickerCell.self, forCellReuseIdentifier: "datePickerCell")
+        tableView.register(TextFieldTableViewCell.self, forCellReuseIdentifier: "textFieldCell")
+        tableView.register(SwitchTableViewCell.self, forCellReuseIdentifier: "switchCell")
+        tableView.register(DoubleLabelTableViewCell.self, forCellReuseIdentifier: "doubleLabelCell")
+        tableView.register(DatePickerTableViewCell.self, forCellReuseIdentifier: "datePickerCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -259,14 +160,14 @@ class ItemDetailsViewController: UITableViewController, UITextFieldDelegate
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if  indexPath.section == 0{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "textFieldCell", for: indexPath) as! TextFieldCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "textFieldCell", for: indexPath) as! TextFieldTableViewCell
             cell.checkListNameTextField.becomeFirstResponder()
             cell.checkListNameTextField.delegate = self
             cell.checkListNameTextField.text = self.itemName
             return cell
         }
         else if indexPath.section == 1 && indexPath.row == 2 && datePickerVisible {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "datePickerCell", for: indexPath) as! DatePickerCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "datePickerCell", for: indexPath) as! DatePickerTableViewCell
             cell.datePicker.setDate(dueDate, animated: false)
             cell.handler = {
                 self.dueDate = $0
@@ -277,13 +178,13 @@ class ItemDetailsViewController: UITableViewController, UITextFieldDelegate
         }
         else {
             if indexPath.row == 0{
-                let cell = tableView.dequeueReusableCell(withIdentifier: "switchCell", for: indexPath) as! SwitchCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "switchCell", for: indexPath) as! SwitchTableViewCell
                 cell.reminderSwitch.isOn = self.remindSwitchState
                 cell.handler = self.shouldRemindToggled
                 return cell
             }
             else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "doubleLabelCell", for: indexPath) as! DoubleLabelCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "doubleLabelCell", for: indexPath) as! DoubleLabelTableViewCell
     
                 let formatter = DateFormatter()
                 formatter.dateStyle = .medium
