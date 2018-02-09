@@ -153,7 +153,15 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         //save checklist index into user defaults (used to launch app on last viewed checklist)
-        indexOfSelectedChecklist =  indexPath.row
+        switch indexPath.section {
+            case 0:
+                indexOfSelectedChecklist =  allLists.index(of: filteredLists[listType.empty][indexPath.row])!
+            case 1:
+                indexOfSelectedChecklist =  allLists.index(of: filteredLists[listType.inProgress][indexPath.row])!
+            default:
+                indexOfSelectedChecklist =  allLists.index(of: filteredLists[listType.done][indexPath.row])!
+        }
+        
         
         navigationController?.pushViewController(CheckListViewController(checkList: filteredLists[indexPath.section][indexPath.row]), animated: true)
     }
@@ -199,7 +207,6 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         //set up delete button functionality
         let delete = UITableViewRowAction(style: .normal, title: "Delete") { action, index in
-            print("share button tapped")
             //remove from filtered lists
             let listToDelete = self.filteredLists[editActionsForRowAt.section][editActionsForRowAt.row]
             self.allLists.removeElement(x: listToDelete)

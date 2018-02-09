@@ -12,6 +12,7 @@ class CheckItemTableViewCell: UITableViewCell
 {
     //MARK:- variables
     var itemLabel = UILabel()
+    var dateLabel = UILabel()
     var checkImageView = UIImageView()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -23,10 +24,12 @@ class CheckItemTableViewCell: UITableViewCell
         itemLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         
         checkImageView.translatesAutoresizingMaskIntoConstraints = false
-        itemLabel.translatesAutoresizingMaskIntoConstraints = false
-        
         contentView.addSubview(checkImageView)
-        contentView.addSubview(itemLabel)
+        
+        for label in [itemLabel, dateLabel] {
+            label.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview(label)
+        }
         
         //MARK:- layout constraints
         NSLayoutConstraint.activate(
@@ -35,7 +38,10 @@ class CheckItemTableViewCell: UITableViewCell
                 checkImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
                 
                 itemLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 50 ),
-                itemLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+                itemLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                
+                dateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+                dateLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
             ])
     }
     

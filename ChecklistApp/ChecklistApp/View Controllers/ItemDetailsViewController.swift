@@ -178,13 +178,13 @@ class ItemDetailsViewController: UITableViewController, UITextFieldDelegate
             itemToEdit.text = itemName
             itemToEdit.shouldRemind = self.remindSwitchState
             itemToEdit.dueDate = self.dueDate
-            itemToEdit.scheduleNotification()
+            itemToEdit.handleNotification()
             delegate?.itemDetailViewController(self, didFinishEditing: itemToEdit)
         }
         else // add the checklist item
         {
             let item = CheckListItem(text: itemName, checked: false, shouldRemind: remindSwitchState, dueDate: self.dueDate)
-            item.scheduleNotification()
+            item.handleNotification()
             delegate?.itemDetailViewController(self, didFinishAdding: item)
         }
     }

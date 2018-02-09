@@ -27,7 +27,21 @@ class CheckListItem: NSObject, Codable
         itemID = AllListsViewController.nextChecklistItemID()
     }
     
+    deinit {
+        removeNotification()
+    }
+    
+    func handleNotification(){
+        if shouldRemind {
+            scheduleNotification()
+        }
+        else {
+            removeNotification()
+        }
+    }
+    
     func scheduleNotification() {
+        removeNotification()
         // 1
         let content = UNMutableNotificationContent()
         content.title = "Reminder:"
@@ -43,6 +57,10 @@ class CheckListItem: NSObject, Codable
         // 5
         let center = UNUserNotificationCenter.current()
         center.add(request)
-        print("Scheduled: \(request) for itemID: \(itemID)")
+    }
+    
+    func removeNotification() {
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests( withIdentifiers: ["\(itemID)"])
     }
 }

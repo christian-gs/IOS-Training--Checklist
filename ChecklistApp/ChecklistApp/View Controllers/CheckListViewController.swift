@@ -41,8 +41,7 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
         
     }
     
-    @objc private func openAddItemViewController(sender: UIButton)
-    {
+    @objc private func openAddItemViewController(sender: UIButton){
         let addItemViewController = ItemDetailsViewController()
         addItemViewController.delegate = self
         navigationController?.pushViewController(addItemViewController, animated: true)
@@ -54,8 +53,7 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
         
         checkList.items[indexPath.row].checked = !checkList.items[indexPath.row].checked
         
-        if let cell = tableView.cellForRow(at: indexPath) as? CheckItemTableViewCell
-        {
+        if let cell = tableView.cellForRow(at: indexPath) as? CheckItemTableViewCell{
             updateCheckMark(index: indexPath.row ,cell: cell)
         }
         
@@ -71,7 +69,6 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
     override func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
         
         let delete = UITableViewRowAction(style: .normal, title: "Delete") { action, index in
-            print("share button tapped")
             
             self.checkList.items.remove(at: editActionsForRowAt.row)
             let indexPaths = [editActionsForRowAt]
@@ -100,8 +97,10 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell( withIdentifier: "ChecklistItem", for: indexPath) as! CheckItemTableViewCell
+        var item = checkList.items[indexPath.row]
+        cell.itemLabel.text = item.text
+        cell.dateLabel.text = "Due: \(item.dueDate.toString())"
         
-        cell.itemLabel.text = checkList.items[indexPath.row].text
         updateCheckMark(index: indexPath.row, cell: cell)
         
         return cell
@@ -151,8 +150,16 @@ class CheckListViewController: UITableViewController, ItemDetailsViewControllerD
         checkList.items.sort(by: { item1, item2 in
             return item1.text.localizedStandardCompare(item2.text) == .orderedAscending })
     }
-
-
-
 }
+
+extension Date {
+    
+    func toString() -> String {
+        let day = Calendar.current.component(.day, from: self)
+        let month = Calendar.current.component(.month, from: self)
+        let year = Calendar.current.component(.year, from: self)
+        return "\(day)/\(month)/\(year)"
+    }
+}
+
 
